@@ -51,6 +51,19 @@ class ArticleModel extends ArticleEntity {
       'content': content,
     };
   }
+
+  factory ArticleModel.fromEntity(ArticleEntity entity) {
+    return ArticleModel(
+      id: entity.id,
+      author: entity.author,
+      title: entity.title,
+      description: entity.description,
+      url: entity.url,
+      urlToImage: entity.urlToImage,
+      publishedAt: entity.publishedAt,
+      content: entity.content,
+    );
+  }
 }
 
 /// Wrapper for the response of the news api. The top key is "articles" and it contains a list of articles

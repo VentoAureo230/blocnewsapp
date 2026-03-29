@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:blocnewsapp/features/daily_news/data/data_sources/local/DAO/article_dao.dart';
+import 'package:blocnewsapp/features/daily_news/data/data_sources/local/app_database.dart';
+import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 import 'package:dio/dio.dart';
 import 'package:blocnewsapp/core/constants/constants.dart';
 import 'package:blocnewsapp/core/resources/data_state.dart';
@@ -9,7 +12,9 @@ import 'package:blocnewsapp/features/daily_news/domain/repository/article_reposi
 
 class ArticleRepositoryImpl implements ArticleRepository {
   final NewsApiService _newsApiService;
-  ArticleRepositoryImpl(this._newsApiService);
+  final ArticleDao _articleDao;
+
+  ArticleRepositoryImpl(this._newsApiService, this._articleDao);
 
   @override
   /// We return model in the data layer, not entity because the domain layer must not depend on other layers
@@ -36,5 +41,20 @@ class ArticleRepositoryImpl implements ArticleRepository {
     } on DioException catch (e) {
       return DataFailed(e);
     }
+  }
+
+  @override
+  Future<void> deleteArticle(ArticleEntity article) {
+    return _articleDao.deleteArticle(ArticleModel.fromEntity(article));
+  }
+
+  @override
+  Future<List<ArticleModel>> getSavedArticle() {
+    return _articleDao.getAllArticles();
+  }
+
+  @override
+  Future<void> saveArticle(ArticleEntity article) {
+    return _articleDao.insertArticle(ArticleModel.fromEntity(article));
   }
 }
