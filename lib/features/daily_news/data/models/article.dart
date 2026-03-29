@@ -24,6 +24,33 @@ class ArticleModel extends ArticleEntity {
       content: map['content'] as String?,
     );
   }
+
+  /// fromMap & toMap method required for SQlite Serialization
+  factory ArticleModel.fromMap(Map<String, dynamic> map) {
+    return ArticleModel(
+      id: map['id'] as int?,
+      author: map['author'] as String?,
+      title: map['title'] as String?,
+      description: map['description'] as String?,
+      url: map['url'] as String?,
+      urlToImage: map['urlToImage'] as String?,
+      publishedAt: map['publishedAt'] as String?,
+      content: map['content'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'author': author,
+      'title': title,
+      'description': description,
+      'url': url,
+      'urlToImage': urlToImage,
+      'publishedAt': publishedAt,
+      'content': content,
+    };
+  }
 }
 
 /// Wrapper for the response of the news api. The top key is "articles" and it contains a list of articles

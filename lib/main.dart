@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
