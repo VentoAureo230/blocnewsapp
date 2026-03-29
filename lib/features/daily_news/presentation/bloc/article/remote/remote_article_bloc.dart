@@ -19,7 +19,7 @@ class RemoteArticleBloc extends Bloc<RemoteArticlesEvent, RemoteArticleState> {
   ) async {
     final dataState = await _getArticleUseCase();
 
-    if (dataState is DataSuccess && dataState.data!.isEmpty) {
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(RemoteArticleLoaded(articles: dataState.data!));
     }
 
