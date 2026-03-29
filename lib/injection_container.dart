@@ -7,7 +7,9 @@ import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
 final sl = GetIt.instance;
-
+/// get_it allows to decouple the creation & consumption of dependencies
+/// and retrieve them from anywhere else, avoiding nested calls
+/// i.e "HomeScreen(api: Api(client: Client(foo: Foo)))"
 Future<void> initDependencies() async {
 
   // Dio
