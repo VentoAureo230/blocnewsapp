@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/entities/article.dart';
+
 class DailyNews extends StatelessWidget {
   const DailyNews({super.key});
 
@@ -16,6 +18,14 @@ class DailyNews extends StatelessWidget {
   AppBar _buildAppBar() {
     return AppBar(
       title: const Text('Daily News', style: TextStyle(color: Colors.black)),
+      actions: [
+        Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.bookmark, color: Colors.black),
+            onPressed: () => Navigator.pushNamed(context, '/SavedArticles'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -32,12 +42,19 @@ class DailyNews extends StatelessWidget {
           return ListView.builder(
             itemCount: state.articles!.length,
             itemBuilder: (context, index) {
-              return ArticleWidget(article: state.articles![index]);
+              return GestureDetector(
+                onTap: () => _onArticlePressed(context, state.articles![index]),
+                child: ArticleWidget(article: state.articles![index]),
+              );
             },
           );
         }
         return const SizedBox();
       },
     );
+  }
+
+  void _onArticlePressed(BuildContext context, ArticleEntity article) {
+    Navigator.pushNamed(context, '/ArticleDetails', arguments: article);
   }
 }
