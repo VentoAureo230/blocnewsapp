@@ -8,6 +8,8 @@ class ArticleEntity extends Equatable {
   final String ? url;
   final String ? urlToImage;
   final String ? publishedAt;
+  final String ? content;
+
   ArticleEntity({
     this.id,
     this.author,
@@ -16,6 +18,7 @@ class ArticleEntity extends Equatable {
     this.url,
     this.urlToImage,
     this.publishedAt,
+    this.content,
   });
 
   @override
@@ -27,5 +30,6 @@ class ArticleEntity extends Equatable {
         url,
         urlToImage,
         publishedAt,
+        content,
       ];
 }
