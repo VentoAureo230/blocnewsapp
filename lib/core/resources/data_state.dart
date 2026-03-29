@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-
+/// This class our entire network call
 abstract class DataState<T> {
   final T? data;
   final DioError? error;

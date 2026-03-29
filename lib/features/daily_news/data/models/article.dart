@@ -1,5 +1,6 @@
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 
+/// We use a model and not Entity because the domain layer must not depend on other layers
 class ArticleModel extends ArticleEntity {
   const ArticleModel({
     int? id,
