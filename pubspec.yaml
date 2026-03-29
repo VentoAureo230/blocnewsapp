@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # State management
-  fluter_bloc: ^8.1.2
+  flutter_bloc: ^8.1.2
 
   # Compare dart objects
   equatable: ^2.0.5
