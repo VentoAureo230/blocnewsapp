@@ -10,7 +10,7 @@ class ArticleEntity extends Equatable {
   final String ? publishedAt;
   final String ? content;
 
-  ArticleEntity({
+  const ArticleEntity({
     this.id,
     this.author,
     this.title,
