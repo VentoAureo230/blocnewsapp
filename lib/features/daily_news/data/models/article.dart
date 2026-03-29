@@ -25,3 +25,18 @@ class ArticleModel extends ArticleEntity {
     );
   }
 }
+
+/// Wrapper for the response of the news api. The top key is "articles" and it contains a list of articles
+class ArticlesModel {
+  final List<ArticleModel> articles;
+
+  const ArticlesModel({required this.articles});
+
+  factory ArticlesModel.fromJson(Map<String, dynamic> map) {
+    return ArticlesModel(
+      articles: (map['articles'] as List<dynamic>)
+          .map((i) => ArticleModel.fromJson(i))
+          .toList(),
+    );
+  }
+}

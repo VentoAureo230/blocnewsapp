@@ -5,7 +5,9 @@ import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/remote
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RemoteArticleBloc extends Bloc<RemoteArticlesEvent, RemoteArticleState> {
+  
   final GetArticleUseCase _getArticleUseCase;
+  
   RemoteArticleBloc(this._getArticleUseCase)
     : super(const RemoteArticleLoading()) {
     on<GetArticles>(onGetArticles);
@@ -22,6 +24,7 @@ class RemoteArticleBloc extends Bloc<RemoteArticlesEvent, RemoteArticleState> {
     }
 
     if (dataState is DataFailed) {
+      print(dataState.error);
       emit(RemoteArticleError(dataState.error!));
     }
   }
