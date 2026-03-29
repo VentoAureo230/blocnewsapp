@@ -8,7 +8,7 @@ part 'news_api_service.g.dart';
 
 /// This file is responsible for handling all the networks call methods
 /// Code is generated using the retrofit package
-@RestApi(baseUrl: "https://newsapi.org/v2")
+@RestApi(baseUrl: "https://newsapi.org/v2") // Passing data from .env file is not working, so I hardcoded the base url here
 abstract class NewsApiService {
   factory NewsApiService(Dio dio) = _NewsApiService;
 

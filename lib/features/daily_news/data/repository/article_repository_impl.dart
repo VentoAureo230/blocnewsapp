@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:blocnewsapp/features/daily_news/data/data_sources/local/DAO/article_dao.dart';
-import 'package:blocnewsapp/features/daily_news/data/data_sources/local/app_database.dart';
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 import 'package:dio/dio.dart';
 import 'package:blocnewsapp/core/constants/constants.dart';
