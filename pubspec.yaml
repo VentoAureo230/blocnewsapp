@@ -50,9 +50,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -65,14 +64,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  #fonts:
-  #  - family: Muli
-  #    fonts:
-  #      - asset: assets/fonts/muli/Muli.ttf
-  #      - asset: assets/fonts/muli/Muli-Bold.ttf
-  #        weight: 700
-  #      - asset: assets/fonts/muli/Muli-Light.ttf
-  #        weight: 300
+  fonts:
+    - family: SourceCodePro
+      fonts:
+        - asset: fonts/SourceCodePro-Bold.ttf
+        - asset: fonts/SourceCodePro-Italic.ttf
+        - asset: fonts/SourceCodePro-Regular.ttf
+          style: italic
+    - family: Coolvetica
+      fonts:
+        - asset: fonts/Coolvetica-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
