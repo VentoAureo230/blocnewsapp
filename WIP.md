@@ -2,7 +2,7 @@
 
 ## Goal
 
-Implement an **article search** feature using the `/everything` endpoint from NewsAPI.  
+Implement an **article search** feature using the `/everything` endpoint from NewsAPI.
 The user will be able to type a keyword, see results in real time (with debounce), and navigate to the detail of a found article.
 
 This feature exercises **all layers** of Clean Architecture + BLoC.
@@ -11,7 +11,7 @@ This feature exercises **all layers** of Clean Architecture + BLoC.
 
 ## UX Mockup
 
-```
+```bash
 ┌──────────────────────────────┐
 │  ← Back          Search      │  ← AppBar with title
 ├──────────────────────────────┤
@@ -43,9 +43,11 @@ Access: 🔍 icon in the `DailyNews` AppBar, next to the bookmark.
 ### 1. Domain Layer
 
 #### Entity
+
 > Reuse `ArticleEntity` — no new entity needed.
 
 #### Repository (contract)
+
 Add a method to the existing repository:
 
 ```dart
@@ -54,9 +56,10 @@ Future<DataState<List<ArticleEntity>>> searchArticles(String query);
 ```
 
 #### Use Case
+
 Create a new use case:
 
-```
+```dart
 lib/features/daily_news/domain/usecases/search_article.dart
 ```
 
@@ -77,6 +80,7 @@ class SearchArticleUseCase implements Usecase<DataState<List<ArticleEntity>>, St
 ### 2. Data Layer
 
 #### Remote Data Source
+
 Add an endpoint to `NewsApiService`:
 
 ```dart
@@ -91,6 +95,7 @@ Future<HttpResponse<ArticlesModel>> searchArticles({
 > ⚠️ After modification, remember to regenerate: `dart run build_runner build --delete-conflicting-outputs`
 
 #### Repository Implementation
+
 Implement `searchArticles` in `ArticleRepositoryImpl`:
 
 ```dart
@@ -120,7 +125,8 @@ Future<DataState<List<ArticleModel>>> searchArticles(String query) async {
 #### BLoC
 
 Create the directory:
-```
+
+```bash
 lib/features/daily_news/presentation/bloc/article/search/
 ├── search_article_bloc.dart
 ├── search_article_event.dart
@@ -128,6 +134,7 @@ lib/features/daily_news/presentation/bloc/article/search/
 ```
 
 **Events:**
+
 ```dart
 abstract class SearchArticleEvent extends Equatable { ... }
 
@@ -138,6 +145,7 @@ class SearchArticles extends SearchArticleEvent {
 ```
 
 **States:**
+
 ```dart
 abstract class SearchArticleState extends Equatable { ... }
 
@@ -152,6 +160,7 @@ class SearchArticleError extends SearchArticleState {       // error
 ```
 
 **BLoC:**
+
 ```dart
 class SearchArticleBloc extends Bloc<SearchArticleEvent, SearchArticleState> {
   final SearchArticleUseCase _searchArticleUseCase;
@@ -183,20 +192,23 @@ class SearchArticleBloc extends Bloc<SearchArticleEvent, SearchArticleState> {
 ```
 
 > 💡 **Bonus — Debounce:** use `bloc_concurrency` or a custom `EventTransformer` to avoid spamming the API on every keystroke. Example:
+>
 > ```dart
 > EventTransformer<T> debounce<T>(Duration duration) {
 >   return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
 > }
 > ```
+>
 > Requires `rxdart` in the dependencies.
 
 #### Page
 
-```
+```bash
 lib/features/daily_news/presentation/pages/search/search_articles.dart
 ```
 
 Structure:
+
 - `BlocProvider<SearchArticleBloc>` as wrapper
 - `TextField` at the top with `onChanged` dispatching `SearchArticles(query)`
 - `BlocBuilder` that displays:

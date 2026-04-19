@@ -11,7 +11,7 @@ This feature exercises: creating a **feature from scratch**, a new **remote data
 
 ## UX Mockup
 
-```
+```bash
 ┌──────────────────────────────┐
 │  Daily News        🔖        │  ← Existing AppBar
 ├──────────────────────────────┤
@@ -82,7 +82,6 @@ lib/features/weather/
   - Returns `HttpResponse<WeatherModel>`
 
 > ⚠️ After creation, regenerate: `dart run build_runner build --delete-conflicting-outputs`
-
 > 💡 Store the API key in `.env`: `WEATHER_API_KEY=your_key_here`
 > Add in `constants.dart`: `final String weatherApiKey = dotenv.env['WEATHER_API_KEY'] ?? '';`
 

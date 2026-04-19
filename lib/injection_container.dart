@@ -6,8 +6,10 @@ import 'package:blocnewsapp/features/daily_news/domain/usecases/get_article.dart
 import 'package:blocnewsapp/features/daily_news/domain/usecases/get_saved_article.dart';
 import 'package:blocnewsapp/features/daily_news/domain/usecases/remove_article.dart';
 import 'package:blocnewsapp/features/daily_news/domain/usecases/save_article.dart';
+import 'package:blocnewsapp/features/daily_news/domain/usecases/search_article.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/local/local_article_bloc.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/remote/remote_article_bloc.dart';
+import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/search/search_article_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
@@ -43,6 +45,10 @@ Future<void> initDependencies() async {
     GetSavedArticleUseCase(sl())
   );
 
+  sl.registerSingleton<SearchArticleUseCase>(
+    SearchArticleUseCase(sl())
+  );
+
   // BLoCs
   sl.registerFactory<RemoteArticleBloc>(
     () => RemoteArticleBloc(sl())
@@ -50,5 +56,9 @@ Future<void> initDependencies() async {
 
   sl.registerFactory<LocalArticleBloc>(
     () => LocalArticleBloc(sl(), sl(), sl())
+  );
+
+  sl.registerFactory<SearchArticleBloc>(
+    () => SearchArticleBloc(sl())
   );
 }

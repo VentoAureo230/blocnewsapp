@@ -56,4 +56,30 @@ class ArticleRepositoryImpl implements ArticleRepository {
   Future<void> saveArticle(ArticleEntity article) {
     return _articleDao.insertArticle(ArticleModel.fromEntity(article));
   }
+
+  @override
+  Future<DataState<List<ArticleEntity>>> searchArticles(String query) async {
+    try {
+      final httpResponse = await _newsApiService.searchArticles(
+        apiKey: newsApiKey,
+        query: query,
+        sortBy: 'publishedAt',
+      );
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data.articles);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }
