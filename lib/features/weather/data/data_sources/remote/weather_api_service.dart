@@ -9,8 +9,8 @@ part 'weather_api_service.g.dart';
 abstract class WeatherApiService {
   factory WeatherApiService(Dio dio) = _WeatherApiService;
 
-  @GET( "weather")
-  Future<WeatherModel> getCurrentWeather({
+  @GET("/weather")
+  Future<HttpResponse<WeatherModel>> getCurrentWeather({
     @Query("q") String ? city,
     @Query("appid") String ? apiKey,
     @Query("units") String ? units,

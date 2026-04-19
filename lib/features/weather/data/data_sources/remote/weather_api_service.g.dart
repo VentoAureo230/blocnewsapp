@@ -22,7 +22,7 @@ class _WeatherApiService implements WeatherApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<WeatherModel> getCurrentWeather({
+  Future<HttpResponse<WeatherModel>> getCurrentWeather({
     String? city,
     String? apiKey,
     String? units,
@@ -36,11 +36,11 @@ class _WeatherApiService implements WeatherApiService {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<WeatherModel>(
+    final _options = _setStreamType<HttpResponse<WeatherModel>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'weather',
+            '/weather',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -54,7 +54,8 @@ class _WeatherApiService implements WeatherApiService {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
-    return _value;
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
