@@ -9,4 +9,6 @@ abstract class ArticleRepository {
   Future<void> saveArticle(ArticleEntity article);
 
   Future<void> deleteArticle(ArticleEntity article);
+
+  Future<DataState<List<ArticleEntity>>> searchArticles(String query);
 }

@@ -1,6 +1,7 @@
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/pages/article_detail/article_details.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/pages/saved_article/saved_article.dart';
+import 'package:blocnewsapp/features/daily_news/presentation/pages/search/search_articles.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -15,6 +16,10 @@ class AppRouter {
       case '/SavedArticles':
         return MaterialPageRoute(
           builder: (_) => const SavedArticles(),
+        );
+      case '/SearchArticles':
+        return MaterialPageRoute(
+          builder: (_) => const SearchArticles(),
         );
       default:
         return null;

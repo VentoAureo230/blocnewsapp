@@ -21,6 +21,14 @@ class DailyNews extends StatelessWidget {
       actions: [
         Builder(
           builder: (context) => IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/SearchArticles');
+            },
+            icon: const Icon(Icons.search, color: Colors.black),
+          ),
+        ),
+        Builder(
+          builder: (context) => IconButton(
             icon: const Icon(Icons.bookmark, color: Colors.black),
             onPressed: () => Navigator.pushNamed(context, '/SavedArticles'),
           ),
