@@ -4,3 +4,5 @@ final String newsBaseApiUrl = dotenv.env['NEWS_BASE_URL']!; // Doesn't work, the
 final String newsApiKey = dotenv.env['NEWS_API_KEY']!;
 const String countryQuery = "us";
 const String categoryQuery = "general";
+
+final String weatherApiKey = dotenv.env['WEATHER_API_KEY']!;
