@@ -2,7 +2,8 @@ import 'package:blocnewsapp/config/routes/app_router.dart';
 import 'package:blocnewsapp/config/theme/app_themes.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/remote/remote_article_bloc.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/remote/remote_article_event.dart';
-import 'package:blocnewsapp/features/daily_news/presentation/pages/home/daily_news.dart';
+import 'package:blocnewsapp/features/homepage/presentation/pages/home_page.dart';
+import 'package:blocnewsapp/features/weather/presentation/cubit/weather_cubit.dart';
 import 'package:blocnewsapp/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,10 +26,13 @@ class MyApp extends StatelessWidget {
         BlocProvider<RemoteArticleBloc>(
           create: (context) => sl()..add(const GetArticles()),
         ),
+        BlocProvider<WeatherCubit>(
+          create: (context) => sl()..getWeather('Rennes'),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DailyNews(),
+        home: const HomePage(),
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),

@@ -10,6 +10,11 @@ import 'package:blocnewsapp/features/daily_news/domain/usecases/search_article.d
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/local/local_article_bloc.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/remote/remote_article_bloc.dart';
 import 'package:blocnewsapp/features/daily_news/presentation/bloc/article/search/search_article_bloc.dart';
+import 'package:blocnewsapp/features/weather/data/data_sources/remote/weather_api_service.dart';
+import 'package:blocnewsapp/features/weather/data/repository/weather_repository_impl.dart';
+import 'package:blocnewsapp/features/weather/domain/repository/weather_repository.dart';
+import 'package:blocnewsapp/features/weather/domain/usecases/get_weather.dart';
+import 'package:blocnewsapp/features/weather/presentation/cubit/weather_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
@@ -26,6 +31,10 @@ Future<void> initDependencies() async {
   sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
   sl.registerSingleton<ArticleRepository>(
     ArticleRepositoryImpl(sl(), sl())
+  );
+  sl.registerSingleton<WeatherApiService>(WeatherApiService(sl()));
+  sl.registerSingleton<WeatherRepository>(
+    WeatherRepositoryImpl(sl())
   );
 
   // Usecases
@@ -49,6 +58,10 @@ Future<void> initDependencies() async {
     SearchArticleUseCase(sl())
   );
 
+  sl.registerSingleton<GetWeatherUseCase>(
+    GetWeatherUseCase(sl())
+  );
+
   // BLoCs
   sl.registerFactory<RemoteArticleBloc>(
     () => RemoteArticleBloc(sl())
@@ -60,5 +73,9 @@ Future<void> initDependencies() async {
 
   sl.registerFactory<SearchArticleBloc>(
     () => SearchArticleBloc(sl())
+  );
+
+  sl.registerFactory<WeatherCubit>(
+    () => WeatherCubit(sl())
   );
 }

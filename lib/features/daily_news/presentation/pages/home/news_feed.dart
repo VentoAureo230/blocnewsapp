@@ -7,37 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entities/article.dart';
 
-class DailyNews extends StatelessWidget {
-  const DailyNews({super.key});
+class NewsFeed extends StatelessWidget {
+  const NewsFeed({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
+    return _buildBody();
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: const Text('Daily News', style: TextStyle(color: Colors.black)),
-      actions: [
-        Builder(
-          builder: (context) => IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/SearchArticles');
-            },
-            icon: const Icon(Icons.search, color: Colors.black),
-          ),
-        ),
-        Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.bookmark, color: Colors.black),
-            onPressed: () => Navigator.pushNamed(context, '/SavedArticles'),
-          ),
-        ),
-      ],
-    );
-  }
-
-  BlocBuilder _buildBody() {
+  BlocBuilder<RemoteArticleBloc, RemoteArticleState> _buildBody() {
     return BlocBuilder<RemoteArticleBloc, RemoteArticleState>(
       builder: (_, state) {
         if (state is RemoteArticleLoading) {
@@ -50,9 +28,10 @@ class DailyNews extends StatelessWidget {
           return ListView.builder(
             itemCount: state.articles!.length,
             itemBuilder: (context, index) {
+              final article = state.articles![index];
               return GestureDetector(
-                onTap: () => _onArticlePressed(context, state.articles![index]),
-                child: ArticleWidget(article: state.articles![index]),
+                onTap: () => _onArticlePressed(context, article),
+                child: ArticleWidget(article: article),
               );
             },
           );

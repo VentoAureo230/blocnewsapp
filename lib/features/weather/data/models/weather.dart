@@ -9,20 +9,22 @@ class WeatherModel extends WeatherEntity {
   });
 
   factory WeatherModel.fromJson(Map<String, dynamic> map) {
+    final weatherList = map['weather'] as List<dynamic>?;
+    final firstWeather = weatherList != null && weatherList.isNotEmpty ? weatherList[0] as Map<String, dynamic> : null;
     return WeatherModel(
       cityName: map['name'] as String?,
-      temperature: map['main']['temp'] as double?,
-      description: map['weather']['0']['description'] as String?,
-      icon: map['weather']['0']['icon'] as String?,
+      temperature: (map['main']['temp'] as num?)?.toDouble(),
+      description: firstWeather?['description'] as String?,
+      icon: firstWeather?['icon'] as String?,
     );
   }
 
   factory WeatherModel.fromMap(Map<String, dynamic> map) {
     return WeatherModel(
       cityName: map['cityName'] as String?,
-      temperature: map[''] as double?,
-      description: map[''] as String?,
-      icon: map[''] as String?,
+      temperature: (map['temperature'] as num?)?.toDouble(),
+      description: map['description'] as String?,
+      icon: map['icon'] as String?,
     );
   }
 
