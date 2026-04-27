@@ -5,14 +5,13 @@ import 'package:retrofit/retrofit.dart';
 
 part 'weather_api_service.g.dart';
 
-@RestApi(baseUrl: "https://api.openweathermap.org/data/2.5/")
+@RestApi()
 abstract class WeatherApiService {
-  factory WeatherApiService(Dio dio) = _WeatherApiService;
+  factory WeatherApiService(Dio dio, {String? baseUrl}) = _WeatherApiService;
 
-  @GET("/weather")
+  @GET("/weather/current")
   Future<HttpResponse<WeatherModel>> getCurrentWeather({
-    @Query("q") String ? city,
-    @Query("appid") String ? apiKey,
+    @Query("city") String ? city,
     @Query("units") String ? units,
   });
 }

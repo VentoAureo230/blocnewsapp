@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:blocnewsapp/core/constants/constants.dart';
 import 'package:blocnewsapp/core/resources/data_state.dart';
 import 'package:blocnewsapp/core/util/api_error_handler.dart';
 import 'package:blocnewsapp/features/weather/data/data_sources/remote/weather_api_service.dart';
@@ -19,7 +18,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
     try {
       final httpResponse = await _weatherApiService.getCurrentWeather(
         city: city,
-        apiKey: weatherApiKey,
         // units: weatherUnits,
       );
       

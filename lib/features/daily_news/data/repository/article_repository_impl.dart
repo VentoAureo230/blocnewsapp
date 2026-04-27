@@ -4,7 +4,6 @@ import 'package:blocnewsapp/core/util/api_error_handler.dart';
 import 'package:blocnewsapp/features/daily_news/data/data_sources/local/DAO/article_dao.dart';
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 import 'package:dio/dio.dart';
-import 'package:blocnewsapp/core/constants/constants.dart';
 import 'package:blocnewsapp/core/resources/data_state.dart';
 import 'package:blocnewsapp/features/daily_news/data/data_sources/remote/news_api_service.dart';
 import 'package:blocnewsapp/features/daily_news/data/models/article.dart';
@@ -22,8 +21,8 @@ class ArticleRepositoryImpl implements ArticleRepository {
   Future<DataState<List<ArticleModel>>> getNewsArticles() async {
     try {
       final httpResponse = await _newsApiService.getNewsArticles(
-        country: countryQuery,
-        category: categoryQuery,
+        country: "us",
+        category: "general",
       );
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
