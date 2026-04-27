@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blocnewsapp/core/util/api_error_handler.dart';
 import 'package:blocnewsapp/features/daily_news/data/data_sources/local/DAO/article_dao.dart';
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 import 'package:dio/dio.dart';
@@ -12,6 +13,7 @@ import 'package:blocnewsapp/features/daily_news/domain/repository/article_reposi
 class ArticleRepositoryImpl implements ArticleRepository {
   final NewsApiService _newsApiService;
   final ArticleDao _articleDao;
+  final ApiErrorHandler _apiErrorHandler = const ApiErrorHandler();
 
   ArticleRepositoryImpl(this._newsApiService, this._articleDao);
 
@@ -20,7 +22,6 @@ class ArticleRepositoryImpl implements ArticleRepository {
   Future<DataState<List<ArticleModel>>> getNewsArticles() async {
     try {
       final httpResponse = await _newsApiService.getNewsArticles(
-        apiKey: newsApiKey,
         country: countryQuery,
         category: categoryQuery,
       );
@@ -28,17 +29,10 @@ class ArticleRepositoryImpl implements ArticleRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data.articles);
       } else {
-        return DataFailed(
-          DioException(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions,
-          ),
-        );
+        return DataFailed(_apiErrorHandler.fromResponse(httpResponse.response));
       }
     } on DioException catch (e) {
-      return DataFailed(e);
+      return DataFailed(_apiErrorHandler.handle(e));
     }
   }
 
@@ -61,7 +55,6 @@ class ArticleRepositoryImpl implements ArticleRepository {
   Future<DataState<List<ArticleEntity>>> searchArticles(String query) async {
     try {
       final httpResponse = await _newsApiService.searchArticles(
-        apiKey: newsApiKey,
         query: query,
         sortBy: 'publishedAt',
       );
@@ -69,17 +62,10 @@ class ArticleRepositoryImpl implements ArticleRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data.articles);
       } else {
-        return DataFailed(
-          DioException(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions,
-          ),
-        );
+        return DataFailed(_apiErrorHandler.fromResponse(httpResponse.response));
       }
     } on DioException catch (e) {
-      return DataFailed(e);
+      return DataFailed(_apiErrorHandler.handle(e));
     }
   }
 }

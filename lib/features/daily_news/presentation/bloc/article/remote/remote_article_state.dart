@@ -1,10 +1,10 @@
+import 'package:blocnewsapp/core/resources/app_error.dart';
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
 import 'package:equatable/equatable.dart';
-import 'package:dio/dio.dart';
 
 abstract class RemoteArticleState extends Equatable {
   final List<ArticleEntity> ? articles;
-  final DioException ? error;
+  final AppError ? error;
 
   const RemoteArticleState({this.articles, this.error});
 
@@ -22,5 +22,5 @@ class RemoteArticleLoaded extends RemoteArticleState {
 }
 
 class RemoteArticleError extends RemoteArticleState {
-  const RemoteArticleError(DioException error) : super(error: error);
+  const RemoteArticleError(AppError error) : super(error: error);
 }

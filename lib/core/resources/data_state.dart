@@ -1,8 +1,9 @@
-import 'package:dio/dio.dart';
+import 'package:blocnewsapp/core/resources/app_error.dart';
+
 /// This class our entire network call
 abstract class DataState<T> {
   final T? data;
-  final DioException? error;
+  final AppError? error;
 
   const DataState({this.data, this.error});
 }
@@ -12,5 +13,5 @@ class DataSuccess<T> extends DataState<T> {
 }
 
 class DataFailed<T> extends DataState<T> {
-  const DataFailed(DioException error) : super(error: error);
+  const DataFailed(AppError error) : super(error: error);
 }

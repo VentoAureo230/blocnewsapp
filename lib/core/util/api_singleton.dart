@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+import 'package:blocnewsapp/features/authentication/data/data_sources/remote/authentication_api_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 
@@ -26,7 +27,10 @@ class ApiSingleton {
     apiUrl = Platform.isIOS
         ? dotenv.env['API_URL_IOS']
         : dotenv.env['API_URL_ANDROID'];
+
     client = Dio(BaseOptions(baseUrl: apiUrl!));
+    AuthenticationApiService(client!);
+    // Déclarer les autres services API ici .....
     initialized = true;
   }
 }

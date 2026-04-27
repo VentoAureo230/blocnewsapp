@@ -1,10 +1,10 @@
+import 'package:blocnewsapp/core/resources/app_error.dart';
 import 'package:blocnewsapp/features/weather/domain/entities/weather.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class WeatherState extends Equatable {
   final WeatherEntity? weather;
-  final DioException? error;
+  final AppError? error;
 
   const WeatherState({this.weather, this.error});
 
@@ -22,5 +22,5 @@ class WeatherStateLoaded extends WeatherState {
 }
 
 class WeatherStateError extends WeatherState {
-  const WeatherStateError(DioException error) : super(error: error);
+  const WeatherStateError(AppError error) : super(error: error);
 }

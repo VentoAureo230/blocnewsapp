@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blocnewsapp/core/constants/constants.dart';
 import 'package:blocnewsapp/core/resources/data_state.dart';
+import 'package:blocnewsapp/core/util/api_error_handler.dart';
 import 'package:blocnewsapp/features/weather/data/data_sources/remote/weather_api_service.dart';
 import 'package:blocnewsapp/features/weather/domain/entities/weather.dart';
 import 'package:blocnewsapp/features/weather/domain/repository/weather_repository.dart';
@@ -9,6 +10,7 @@ import 'package:dio/dio.dart';
 
 class WeatherRepositoryImpl implements WeatherRepository {
   final WeatherApiService _weatherApiService;
+  final ApiErrorHandler _apiErrorHandler = const ApiErrorHandler();
 
   WeatherRepositoryImpl(this._weatherApiService);
 
@@ -24,17 +26,10 @@ class WeatherRepositoryImpl implements WeatherRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
-        return DataFailed(
-          DioException(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions,
-          ),
-        );
+        return DataFailed(_apiErrorHandler.fromResponse(httpResponse.response));
       }
     } on DioException catch (e) {
-      return DataFailed(e);
+      return DataFailed(_apiErrorHandler.handle(e));
     }
   }
 }

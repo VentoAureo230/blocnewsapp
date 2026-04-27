@@ -1,10 +1,10 @@
+import 'package:blocnewsapp/core/resources/app_error.dart';
 import 'package:blocnewsapp/features/daily_news/domain/entities/article.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchArticleState extends Equatable {
   final List<ArticleEntity>? articles;
-  final DioException? error;
+  final AppError? error;
 
   const SearchArticleState({this.articles, this.error});
 
@@ -26,5 +26,5 @@ class SearchArticleLoaded extends SearchArticleState {
 }
 
 class SearchArticleError extends SearchArticleState {
-  const SearchArticleError(DioException error) : super(error: error);
+  const SearchArticleError(AppError error) : super(error: error);
 }
